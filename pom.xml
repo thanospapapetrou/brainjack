@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.thanospapapetrou</groupId>
+  <artifactId>coinbase-trader</artifactId>
+  <version>0.0.0-SNAPSHOT</version>
+  <name>brainjack</name>
+  <description>A Brainfuck interpreter written in Java.</description>
+  <url>https://github.com/thanospapapetrou/brainjack</url>
+  <inceptionYear>2018</inceptionYear>
+  <licenses>
+    <license>
+      <name>GNU Affero General Public License, Version 3.0</name>
+      <url>http://www.gnu.org/licenses/agpl-3.0.en.html</url>
+      <distribution>repo</distribution>
+      <comments>AGPLv3</comments>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>thanos</id>
+      <name>Thanos Papapetrou</name>
+      <email>thanos.papapetrou@gmail.com</email>
+      <url>https://github.com/thanospapapetrou</url>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>Europe/Athens</timezone>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/thanospapapetrou/brainjack.git</connection>
+    <developerConnection>scm:git:https://github.com/thanospapapetrou/brainjack.git</developerConnection>
+    <url>https://github.com/thanospapapetrou/brainjack</url>
+  </scm>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/thanospapapetrou/brainjack/issues</url>
+  </issueManagement>
+</project>
