@@ -39,8 +39,48 @@
   </issueManagement>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <brainjack.extension>b, bf</brainjack.extension>
+    <brainjack.language.name>Brainfuck</brainjack.language.name>
+    <brainjack.language.vendor>Urban Müller</brainjack.language.vendor>
+    <brainjack.language.version>1993</brainjack.language.version>
+    <brainjack.mime.type>application/X-brainfuck, text/X-brainfuck</brainjack.mime.type>
+    <brainjack.name>Brainjack, brainjack, Brainfuck, brainfuck</brainjack.name>
   </properties>
   <build>
     <defaultGoal>verify</defaultGoal>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifest>
+              <mainClass>com.github.thanospapapetrou.brainjack.Brainjack</mainClass>
+            </manifest>
+            <manifestSections>
+              <manifestSection>
+                <name>com/github/thanospapapetrou/brainjack</name>
+                <manifestEntries>
+                  <Specification-Title>${brainjack.language.name}</Specification-Title>
+                  <Specification-Version>${brainjack.language.version}</Specification-Version>
+                  <Specification-Vendor>${brainjack.language.vendor}</Specification-Vendor>
+                  <Implementation-Title>${project.name}</Implementation-Title>
+                  <Implementation-Version>${project.version}</Implementation-Version>
+                  <Implementation-Vendor>${project.developers[0].name}</Implementation-Vendor>
+                </manifestEntries>
+              </manifestSection>
+            </manifestSections>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
