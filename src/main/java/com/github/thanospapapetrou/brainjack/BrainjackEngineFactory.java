@@ -5,9 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 
+/**
+ * Class implementing Brainjack engine factory.
+ * 
+ * @author thanos
+ */
 public class BrainjackEngineFactory implements ScriptEngineFactory {
   private static final String DELIMITER = ",\\s*";
   private static final String ENGINE_NAME = "ScriptEngine.ENGINE";
@@ -27,7 +31,13 @@ public class BrainjackEngineFactory implements ScriptEngineFactory {
     return properties;
   }
 
-  public BrainjackEngineFactory() throws IOException { // TODO do not throw exception?
+  /**
+   * Construct a new Brainjack engine factory.
+   * 
+   * @throws IOException
+   *           if any errors occur while loading Brainjack properties
+   */
+  public BrainjackEngineFactory() throws IOException {
     this(loadProperties());
   }
 
@@ -84,26 +94,24 @@ public class BrainjackEngineFactory implements ScriptEngineFactory {
   @Override
   public String getMethodCallSyntax(final String object, final String method,
       final String... arguments) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public String getOutputStatement(final String message) {
-    // TODO Auto-generated method stub
+    // TODO this needs really much work...
     return null;
   }
 
   @Override
   public String getProgram(final String... statements) {
-    // TODO Auto-generated method stub
+    // TODO concatenate?
     return null;
   }
 
   @Override
-  public ScriptEngine getScriptEngine() {
-    // TODO Auto-generated method stub
-    return null;
+  public BrainjackEngine getScriptEngine() {
+    return new BrainjackEngine(this);
   }
 
   private String getStringProperty(final String key) {
@@ -111,6 +119,7 @@ public class BrainjackEngineFactory implements ScriptEngineFactory {
   }
 
   private List<String> getListProperty(final String key) {
-    return Arrays.asList(properties.getProperty(key).split(DELIMITER));
+    final String property = properties.getProperty(key);
+    return (property == null) ? null : Arrays.asList(property.split(DELIMITER));
   }
 }
