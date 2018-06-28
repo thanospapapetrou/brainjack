@@ -51,28 +51,28 @@ public class Parser {
     while (true) {
       final Token token = tokenizer.getNextToken();
       switch (token.getType()) {
-      case GREATER_THAN:
-      case LESS_THAN:
-      case PLUS:
-      case MINUS:
-      case FULL_STOP:
-      case COMMA:
+      case MOVE_RIGHT:
+      case MOVE_LEFT:
+      case INCREASE:
+      case DECREASE:
+      case WRITE:
+      case READ:
         commands.add(new SimpleCommand(token));
         break;
-      case LEFT_SQUARE_BRACKET:
+      case ITERATION_START:
         commands.add(parse(token));
         break;
-      case RIGHT_SQUARE_BRACKET:
+      case ITERATION_END:
         return (iterationStart == null)
-            ? throwParseException(token, TokenType.GREATER_THAN, TokenType.LESS_THAN,
-                TokenType.PLUS, TokenType.MINUS, TokenType.FULL_STOP, TokenType.COMMA,
-                TokenType.LEFT_SQUARE_BRACKET, TokenType.EOF)
+            ? throwParseException(token, TokenType.MOVE_RIGHT, TokenType.MOVE_LEFT,
+                TokenType.INCREASE, TokenType.DECREASE, TokenType.WRITE, TokenType.READ,
+                TokenType.ITERATION_START, TokenType.EOF)
             : (T) new Iteration(iterationStart, token, commands);
       case EOF:
         return (iterationStart == null) ? (T) commands
-            : throwParseException(token, TokenType.GREATER_THAN, TokenType.LESS_THAN,
-                TokenType.PLUS, TokenType.MINUS, TokenType.FULL_STOP, TokenType.COMMA,
-                TokenType.LEFT_SQUARE_BRACKET, TokenType.RIGHT_SQUARE_BRACKET);
+            : throwParseException(token, TokenType.MOVE_RIGHT, TokenType.MOVE_LEFT,
+                TokenType.INCREASE, TokenType.DECREASE, TokenType.WRITE, TokenType.READ,
+                TokenType.ITERATION_START, TokenType.ITERATION_END);
       }
     }
   }

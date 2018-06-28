@@ -18,8 +18,8 @@ public class SimpleCommand implements Command {
   private static final String INVALID_TOKEN = String.format("Token must be %1$s",
       String.join(", ",
           Arrays
-              .stream(new TokenType[] {TokenType.GREATER_THAN, TokenType.LESS_THAN, TokenType.PLUS,
-                  TokenType.MINUS, TokenType.FULL_STOP, TokenType.COMMA})
+              .stream(new TokenType[] {TokenType.MOVE_RIGHT, TokenType.MOVE_LEFT, TokenType.INCREASE,
+                  TokenType.DECREASE, TokenType.WRITE, TokenType.READ})
               .map(TokenType::toString).collect(Collectors.toList()).toArray(new String[0])));
   private static final String NULL_TOKEN = "Token must not be null";
 
@@ -27,8 +27,8 @@ public class SimpleCommand implements Command {
 
   private static void requireValidToken(final Token token) {
     Objects.requireNonNull(token, NULL_TOKEN);
-    if ((token.getType() == TokenType.LEFT_SQUARE_BRACKET)
-        || (token.getType() == TokenType.RIGHT_SQUARE_BRACKET)) {
+    if ((token.getType() == TokenType.ITERATION_START)
+        || (token.getType() == TokenType.ITERATION_END)) {
       throw new IllegalArgumentException(INVALID_TOKEN);
     }
   }
@@ -47,14 +47,14 @@ public class SimpleCommand implements Command {
   @Override
   public void eval(final ScriptContext context) {
     switch (token.getType()) {
-    case GREATER_THAN:
-    case LESS_THAN:
-    case PLUS:
-    case MINUS:
-    case FULL_STOP:
-    case COMMA:
-    case LEFT_SQUARE_BRACKET:
-    case RIGHT_SQUARE_BRACKET:
+    case MOVE_RIGHT:
+    case MOVE_LEFT:
+    case INCREASE:
+    case DECREASE:
+    case WRITE:
+    case READ:
+    case ITERATION_START:
+    case ITERATION_END:
     case EOF:
     }
   }

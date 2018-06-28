@@ -7,44 +7,44 @@ package com.github.thanospapapetrou.brainjack.parser.tokenizer;
  */
 public enum TokenType {
   /**
-   * Greater than (<code>&gt;</code>).
+   * Move right (<code>&gt;</code>).
    */
-  GREATER_THAN("greater than", '>'),
+  MOVE_RIGHT("greater than", '>'),
 
   /**
-   * Less than (<code>&lt;</code>).
+   * Move left (<code>&lt;</code>).
    */
-  LESS_THAN("less than", '<'),
+  MOVE_LEFT("less than", '<'),
 
   /**
-   * Plus (<code>+</code>).
+   * Increase (<code>+</code>).
    */
-  PLUS("plus", '+'),
+  INCREASE("plus", '+'),
 
   /**
-   * Minus (<code>-</code>).
+   * Decrease (<code>-</code>).
    */
-  MINUS("minus", '-'),
+  DECREASE("minus", '-'),
 
   /**
-   * Full stop (<code>.</code>).
+   * Write (<code>.</code>).
    */
-  FULL_STOP("full stop", '.'),
+  WRITE("full stop", '.'),
 
   /**
-   * Comma (<code>,</code>).
+   * Read (<code>,</code>).
    */
-  COMMA("comma", ','),
+  READ("comma", ','),
 
   /**
-   * Left square bracket (<code>[</code>).
+   * Iteration start (<code>[</code>).
    */
-  LEFT_SQUARE_BRACKET("left square bracket", '['),
+  ITERATION_START("left square bracket", '['),
 
   /**
-   * Right square bracket (<code>]</code>).
+   * Iteration end (<code>]</code>).
    */
-  RIGHT_SQUARE_BRACKET("right square bracket", ']'),
+  ITERATION_END("right square bracket", ']'),
 
   /**
    * End of file (EOF).
