@@ -8,7 +8,6 @@ import java.io.StringReader;
 import java.util.Objects;
 
 import javax.script.AbstractScriptEngine;
-import javax.script.Bindings;
 import javax.script.Compilable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
@@ -43,19 +42,19 @@ public class BrainjackEngine extends AbstractScriptEngine implements Compilable,
   }
 
   @Override
-  public Bindings createBindings() {
+  public SimpleBindings createBindings() {
     return new SimpleBindings(); // TODO use custom bindings?
   }
 
   @Override
-  public Object eval(final String script, final ScriptContext context) throws ScriptException {
+  public Void eval(final String script, final ScriptContext context) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
     Objects.requireNonNull(context, NULL_CONTEXT);
     return compile(script).eval(context);
   }
 
   @Override
-  public Object eval(final Reader script, final ScriptContext context) throws ScriptException {
+  public Void eval(final Reader script, final ScriptContext context) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
     Objects.requireNonNull(context, NULL_CONTEXT);
     return compile(script).eval(context);

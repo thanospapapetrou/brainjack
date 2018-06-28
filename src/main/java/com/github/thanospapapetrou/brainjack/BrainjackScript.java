@@ -19,7 +19,8 @@ public class BrainjackScript extends CompiledScript {
    * Constant identifying script scope, which contains attributes visible only to a single script.
    */
   public static final int SCRIPT_SCOPE =
-      2 * ScriptContext.ENGINE_SCOPE - ScriptContext.GLOBAL_SCOPE;
+      2 * ScriptContext.ENGINE_SCOPE - ScriptContext.GLOBAL_SCOPE; // TODO should this be part of
+                                                                   // engine?
 
   private static final String NULL_CONTEXT = "Context must not be null";
 
@@ -32,7 +33,7 @@ public class BrainjackScript extends CompiledScript {
   }
 
   @Override
-  public Object eval(final ScriptContext context) throws ScriptException {
+  public Void eval(final ScriptContext context) throws ScriptException {
     Objects.requireNonNull(context, NULL_CONTEXT);
     for (final Command command : commands) {
       command.eval(context);
