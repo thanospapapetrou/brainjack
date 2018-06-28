@@ -10,7 +10,6 @@ import java.util.Objects;
 import javax.script.AbstractScriptEngine;
 import javax.script.Bindings;
 import javax.script.Compilable;
-import javax.script.CompiledScript;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
@@ -32,13 +31,13 @@ public class BrainjackEngine extends AbstractScriptEngine implements Compilable,
   }
 
   @Override
-  public CompiledScript compile(final Reader script) throws ScriptException {
+  public BrainjackScript compile(final Reader script) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
     return new BrainjackScript(this, new Parser(new Tokenizer(script, null)).parse());
   }
 
   @Override
-  public CompiledScript compile(final String script) throws ScriptException {
+  public BrainjackScript compile(final String script) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
     return compile(new StringReader(script));
   }
