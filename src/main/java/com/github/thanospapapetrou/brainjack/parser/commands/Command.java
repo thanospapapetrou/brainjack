@@ -3,7 +3,7 @@ package com.github.thanospapapetrou.brainjack.parser.commands;
 import javax.script.ScriptContext;
 
 /**
- * Interface defining a Brainjack command.
+ * Interface defining a Brainfuck command.
  * 
  * @author thanos
  */

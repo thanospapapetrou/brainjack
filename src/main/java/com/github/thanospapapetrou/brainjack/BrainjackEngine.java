@@ -34,8 +34,7 @@ public class BrainjackEngine extends AbstractScriptEngine implements Compilable,
   @Override
   public CompiledScript compile(final Reader script) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
-    // TODO parser should be instance?
-    return new BrainjackScript(this, new Parser(new Tokenizer(script)).parse());
+    return new BrainjackScript(this, new Parser(new Tokenizer(script, null)).parse());
   }
 
   @Override
