@@ -45,6 +45,8 @@
     <brainjack.language.version>1993</brainjack.language.version>
     <brainjack.mime.type>application/X-brainfuck, text/X-brainfuck</brainjack.mime.type>
     <brainjack.name>Brainjack, brainjack, Brainfuck, brainfuck</brainjack.name>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   <build>
     <defaultGoal>verify</defaultGoal>

@@ -1,6 +1,10 @@
 package com.github.thanospapapetrou.brainjack;
 
+import com.github.thanospapapetrou.brainjack.parser.Parser;
+import com.github.thanospapapetrou.brainjack.parser.tokenizer.Tokenizer;
+
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.Objects;
 
 import javax.script.AbstractScriptEngine;
@@ -10,6 +14,7 @@ import javax.script.CompiledScript;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
+import javax.script.SimpleBindings;
 
 /**
  * Class implementing Brainjack engine.
@@ -18,38 +23,30 @@ import javax.script.ScriptException;
  */
 public class BrainjackEngine extends AbstractScriptEngine implements Compilable, ScriptEngine {
   private static final String NULL_CONTEXT = "Context must not be null";
-  private static final String NULL_FACTORY = "Factory must not be null";
   private static final String NULL_SCRIPT = "Script must not be null";
 
   private final BrainjackEngineFactory factory;
 
-  /**
-   * Construct a new Brainjack engine.
-   * 
-   * @param factory
-   *          the Brainjack engine factory of this engine
-   */
-  public BrainjackEngine(final BrainjackEngineFactory factory) {
-    Objects.requireNonNull(factory, NULL_FACTORY);
+  BrainjackEngine(final BrainjackEngineFactory factory) {
     this.factory = factory;
   }
 
   @Override
   public CompiledScript compile(final Reader script) throws ScriptException {
-    // TODO Auto-generated method stub
-    return null;
+    Objects.requireNonNull(script, NULL_SCRIPT);
+    // TODO parser should be instance?
+    return new BrainjackScript(this, new Parser(new Tokenizer(script)).parse());
   }
 
   @Override
   public CompiledScript compile(final String script) throws ScriptException {
-    // TODO Auto-generated method stub
-    return null;
+    Objects.requireNonNull(script, NULL_SCRIPT);
+    return compile(new StringReader(script));
   }
 
   @Override
   public Bindings createBindings() {
-    // TODO Auto-generated method stub
-    return null;
+    return new SimpleBindings(); // TODO use custom bindings?
   }
 
   @Override

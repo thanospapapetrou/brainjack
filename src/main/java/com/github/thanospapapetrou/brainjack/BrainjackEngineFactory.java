@@ -25,24 +25,15 @@ public class BrainjackEngineFactory implements ScriptEngineFactory {
 
   private final Properties properties;
 
-  private static Properties loadProperties() throws IOException {
-    final Properties properties = new Properties();
-    properties.load(BrainjackEngineFactory.class.getResourceAsStream(PROPERTIES));
-    return properties;
-  }
-
   /**
    * Construct a new Brainjack engine factory.
    * 
    * @throws IOException
-   *           if any errors occur while loading Brainjack properties
+   *           if any errors occur while loading properties // TODO
    */
   public BrainjackEngineFactory() throws IOException {
-    this(loadProperties());
-  }
-
-  private BrainjackEngineFactory(final Properties properties) {
-    this.properties = properties;
+    properties = new Properties();
+    properties.load(BrainjackEngineFactory.class.getResourceAsStream(PROPERTIES));
   }
 
   @Override
