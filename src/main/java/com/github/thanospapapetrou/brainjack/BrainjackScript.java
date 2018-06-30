@@ -35,9 +35,12 @@ public class BrainjackScript extends CompiledScript {
   @Override
   public Void eval(final ScriptContext context) throws ScriptException {
     Objects.requireNonNull(context, NULL_CONTEXT);
+    final ScriptContext oldContext = engine.getContext();
+    engine.setContext(context);
     for (final Command command : commands) {
-      command.eval(context);
+      command.execute(engine);
     }
+    engine.setContext(oldContext);
     return null;
   }
 

@@ -1,5 +1,6 @@
 package com.github.thanospapapetrou.brainjack.parser.commands;
 
+import com.github.thanospapapetrou.brainjack.BrainjackEngine;
 import com.github.thanospapapetrou.brainjack.parser.tokenizer.Token;
 import com.github.thanospapapetrou.brainjack.parser.tokenizer.TokenType;
 
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.script.ScriptContext;
+import javax.script.ScriptException;
 
 /**
  * Class representing a Brainfuck iteration.
@@ -55,8 +56,12 @@ public class Iteration implements Command {
   }
 
   @Override
-  public void eval(ScriptContext context) {
-    // TODO Auto-generated method stub
+  public void execute(final BrainjackEngine engine) throws ScriptException {
+    while (engine.getValue() != 0) {
+      for (final Command command : commands) {
+        command.execute(engine);
+      }
+    }
   }
 
   @Override

@@ -2,6 +2,7 @@ package com.github.thanospapapetrou.brainjack;
 
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 public class Brainjack {
   public static void main(final String[] arguments) {
@@ -15,6 +16,12 @@ public class Brainjack {
       System.out.println("MIME Types: " + factory.getMimeTypes());
       System.out.println("Extensions: " + factory.getExtensions());
       System.out.println();
+    }
+    try {
+      manager.getEngineByName("brainjack").eval(",.");
+    } catch (final ScriptException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
   }
 }

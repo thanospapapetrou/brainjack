@@ -1,6 +1,8 @@
 package com.github.thanospapapetrou.brainjack.parser.commands;
 
-import javax.script.ScriptContext;
+import com.github.thanospapapetrou.brainjack.BrainjackEngine;
+
+import javax.script.ScriptException;
 
 /**
  * Interface defining a Brainfuck command.
@@ -9,10 +11,12 @@ import javax.script.ScriptContext;
  */
 public interface Command {
   /**
-   * Evaluate.
+   * Execute.
    * 
-   * @param context
-   *          the script context in which to evaluate this command
+   * @param engine
+   *          the Brainjack engine to use to execute this command
+   * @throws ScriptException
+   *           if any errors occur while execution
    */
-  public void eval(final ScriptContext context);
+  public void execute(final BrainjackEngine engine) throws ScriptException;
 }
