@@ -26,8 +26,9 @@ public class SimpleCommand implements Command {
 
   private static void requireValidToken(final Token token) {
     Objects.requireNonNull(token, NULL_TOKEN);
-    if ((token.getType() == TokenType.ITERATION_START)
-        || (token.getType() == TokenType.ITERATION_END)) {
+    final TokenType type = token.getType();
+    if ((type == TokenType.ITERATION_START) || (type == TokenType.ITERATION_END)
+        || (type == TokenType.EOF)) {
       throw new IllegalArgumentException(INVALID_TOKEN);
     }
   }
