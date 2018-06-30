@@ -5,6 +5,7 @@ import com.github.thanospapapetrou.brainjack.parser.tokenizer.Tokenizer;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.script.AbstractScriptEngine;
@@ -32,7 +33,10 @@ public class BrainjackEngine extends AbstractScriptEngine implements Compilable,
   @Override
   public BrainjackScript compile(final Reader script) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
-    return new BrainjackScript(this, new Parser(new Tokenizer(script, null)).parse());
+    final BrainjackScript result =
+        new BrainjackScript(this, new Parser(new Tokenizer(script, null)).parse());
+    System.out.println(result); // TODO remove
+    return result;
   }
 
   @Override
@@ -50,6 +54,14 @@ public class BrainjackEngine extends AbstractScriptEngine implements Compilable,
   public Void eval(final String script, final ScriptContext context) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
     Objects.requireNonNull(context, NULL_CONTEXT);
+    System.out.println("Context: " + context); // TODO remove
+    for (final int scope : context.getScopes()) {
+      System.out.println("Scope: " + scope);
+      System.out.println("Bindings: " + context.getBindings(scope));
+      for (Map.Entry<String, Object> entry : context.getBindings(scope).entrySet()) {
+        System.out.println(entry.getKey() + " " + entry.getValue());
+      }
+    }
     return compile(script).eval(context);
   }
 

@@ -5,6 +5,7 @@ import com.github.thanospapapetrou.brainjack.parser.tokenizer.TokenType;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.script.ScriptContext;
 
@@ -45,8 +46,7 @@ public class Iteration implements Command {
    *          the commands contained in this iteration
    */
   public Iteration(final Token startToken, final Token endToken, final List<Command> commands) {
-    requireValidToken(startToken, NULL_START_TOKEN, TokenType.ITERATION_START,
-        INVALID_START_TOKEN);
+    requireValidToken(startToken, NULL_START_TOKEN, TokenType.ITERATION_START, INVALID_START_TOKEN);
     requireValidToken(endToken, NULL_END_TOKEN, TokenType.ITERATION_END, INVALID_END_TOKEN);
     Objects.requireNonNull(commands, NULL_COMMANDS);
     this.startToken = startToken;
@@ -57,6 +57,12 @@ public class Iteration implements Command {
   @Override
   public void eval(ScriptContext context) {
     // TODO Auto-generated method stub
+  }
 
+  @Override
+  public String toString() {
+    return startToken.toString()
+        + commands.stream().map(Command::toString).collect(Collectors.joining())
+        + endToken.toString();
   }
 }

@@ -3,9 +3,9 @@ package com.github.thanospapapetrou.brainjack.parser.commands;
 import com.github.thanospapapetrou.brainjack.parser.tokenizer.Token;
 import com.github.thanospapapetrou.brainjack.parser.tokenizer.TokenType;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.script.ScriptContext;
 
@@ -16,11 +16,10 @@ import javax.script.ScriptContext;
  */
 public class SimpleCommand implements Command {
   private static final String INVALID_TOKEN = String.format("Token must be %1$s",
-      String.join(", ",
-          Arrays
-              .stream(new TokenType[] {TokenType.MOVE_RIGHT, TokenType.MOVE_LEFT, TokenType.INCREASE,
-                  TokenType.DECREASE, TokenType.WRITE, TokenType.READ})
-              .map(TokenType::toString).collect(Collectors.toList()).toArray(new String[0])));
+      Stream
+          .of(TokenType.MOVE_RIGHT, TokenType.MOVE_LEFT, TokenType.INCREASE, TokenType.DECREASE,
+              TokenType.WRITE, TokenType.READ)
+          .map(TokenType::toString).collect(Collectors.joining(", ")));
   private static final String NULL_TOKEN = "Token must not be null";
 
   private final Token token;
@@ -57,5 +56,10 @@ public class SimpleCommand implements Command {
     case ITERATION_END:
     case EOF:
     }
+  }
+
+  @Override
+  public String toString() {
+    return token.toString();
   }
 }

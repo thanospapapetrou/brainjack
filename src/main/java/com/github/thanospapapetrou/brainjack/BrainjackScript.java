@@ -4,6 +4,7 @@ import com.github.thanospapapetrou.brainjack.parser.commands.Command;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.script.CompiledScript;
 import javax.script.ScriptContext;
@@ -18,9 +19,8 @@ public class BrainjackScript extends CompiledScript {
   /**
    * Constant identifying script scope, which contains attributes visible only to a single script.
    */
-  public static final int SCRIPT_SCOPE =
-      2 * ScriptContext.ENGINE_SCOPE - ScriptContext.GLOBAL_SCOPE; // TODO should this be part of
-                                                                   // engine?
+  public static final int SCRIPT_SCOPE = 0; // TODO should this be part of
+                                                                   // engine or custom context?
 
   private static final String NULL_CONTEXT = "Context must not be null";
 
@@ -44,5 +44,10 @@ public class BrainjackScript extends CompiledScript {
   @Override
   public BrainjackEngine getEngine() {
     return engine;
+  }
+
+  @Override
+  public String toString() {
+    return commands.stream().map(Command::toString).collect(Collectors.joining());
   }
 }

@@ -3,9 +3,9 @@ package com.github.thanospapapetrou.brainjack.parser;
 import com.github.thanospapapetrou.brainjack.parser.tokenizer.Token;
 import com.github.thanospapapetrou.brainjack.parser.tokenizer.TokenType;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.script.ScriptException;
 
@@ -39,11 +39,9 @@ public class ParseException extends ScriptException {
    *          the token types expected
    */
   public ParseException(final Token unexpected, final TokenType... expected) {
-    super(
-        String.format(UNEXPECTED, Objects.requireNonNull(unexpected, NULL_UNEXPECTED).getType(),
-            String.join(DELIMITER,
-                Arrays.stream(requireValidExpected(expected)).map(TokenType::toString)
-                    .collect(Collectors.toList()))),
-        unexpected.getFile(), unexpected.getLine(), unexpected.getColumn());
+    super(String.format(UNEXPECTED, Objects.requireNonNull(unexpected, NULL_UNEXPECTED).getType(),
+        Stream.of(requireValidExpected(expected)).map(TokenType::toString)
+            .collect(Collectors.joining(DELIMITER)),
+        unexpected.getFile(), unexpected.getLine(), unexpected.getColumn()));
   }
 }

@@ -70,4 +70,9 @@ public class Token {
   public int getColumn() {
     return column;
   }
+
+  @Override
+  public String toString() {
+    return (type == TokenType.EOF) ? "" : Character.toString((char) type.getToken());
+  }
 }
