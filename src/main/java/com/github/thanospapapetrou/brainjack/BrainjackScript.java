@@ -16,12 +16,6 @@ import javax.script.ScriptException;
  * @author thanos
  */
 public class BrainjackScript extends CompiledScript {
-  /**
-   * Constant identifying script scope, which contains attributes visible only to a single script.
-   */
-  public static final int SCRIPT_SCOPE = 0; // TODO should this be part of
-                                                                   // engine or custom context?
-
   private static final String NULL_CONTEXT = "Context must not be null";
 
   private final BrainjackEngine engine;

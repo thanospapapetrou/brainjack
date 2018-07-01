@@ -5,7 +5,6 @@ import com.github.thanospapapetrou.brainjack.parser.tokenizer.Tokenizer;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.script.AbstractScriptEngine;
@@ -22,6 +21,8 @@ import javax.script.SimpleBindings;
  */
 public class BrainjackEngine extends AbstractScriptEngine implements Compilable, ScriptEngine {
   private static final String ARRAY = "array";
+  private static final String NON_BYTE_ARRAY_ARRAY = "Array is not a byte array";
+  private static final String NON_INTEGER_POINTER = "Pointer is not an integer";
   private static final String NULL_CONTEXT = "Context must not be null";
   private static final String NULL_SCRIPT = "Script must not be null";
   private static final String POINTER = "pointer";
@@ -34,13 +35,65 @@ public class BrainjackEngine extends AbstractScriptEngine implements Compilable,
     put(ARRAY, new byte[3000]); // TODO set size
   }
 
+  /**
+   * Get pointer.
+   * 
+   * @return the pointer of this engine
+   * @throws ScriptException
+   *           if any errors occur while retrieving pointer
+   */
+  public int getPointer() throws ScriptException {
+    return get(POINTER, Integer.class, NON_INTEGER_POINTER);
+  }
+
+  /**
+   * Set pointer.
+   * 
+   * @param pointer
+   *          the new pointer of this engine
+   */
+  public void setPointer(final int pointer) { // TODO check pointer range?
+    getBindings(ScriptContext.ENGINE_SCOPE).put(POINTER, pointer);
+  }
+
+  /**
+   * Get array.
+   * 
+   * @return the array of this engine
+   * @throws ScriptException
+   *           if any errors occur while retrieving array
+   */
+  public byte[] getArray() throws ScriptException {
+    return get(ARRAY, byte[].class, NON_BYTE_ARRAY_ARRAY);
+  }
+
+  /**
+   * Get value.
+   * 
+   * @return the value of the array at current pointer of this engine
+   * @throws ScriptException
+   *           if any errors occur while retrieving value
+   */
+  public byte getValue() throws ScriptException {
+    return getArray()[getPointer()];
+  }
+
+  /**
+   * Set value.
+   * 
+   * @param value
+   *          the new value of the array at current pointer of this engine
+   * @throws ScriptException
+   *           if any errors occur while setting value
+   */
+  public void setValue(final byte value) throws ScriptException {
+    getArray()[getPointer()] = value;
+  }
+
   @Override
   public BrainjackScript compile(final Reader script) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
-    final BrainjackScript result =
-        new BrainjackScript(this, new Parser(new Tokenizer(script, null)).parse());
-    System.out.println(result); // TODO remove
-    return result;
+    return new BrainjackScript(this, new Parser(new Tokenizer(script, null)).parse());
   }
 
   @Override
@@ -51,21 +104,16 @@ public class BrainjackEngine extends AbstractScriptEngine implements Compilable,
 
   @Override
   public SimpleBindings createBindings() {
-    return new SimpleBindings(); // TODO use custom bindings?
+    final SimpleBindings bindings = new SimpleBindings();
+    bindings.put(POINTER, 0);
+    bindings.put(ARRAY, new byte[3000]); // TODO use size
+    return bindings;
   }
 
   @Override
   public Void eval(final String script, final ScriptContext context) throws ScriptException {
     Objects.requireNonNull(script, NULL_SCRIPT);
     Objects.requireNonNull(context, NULL_CONTEXT);
-    System.out.println("Context: " + context); // TODO remove
-    for (final int scope : context.getScopes()) {
-      System.out.println("Scope: " + scope);
-      System.out.println("Bindings: " + context.getBindings(scope));
-      for (Map.Entry<String, Object> entry : context.getBindings(scope).entrySet()) {
-        System.out.println(entry.getKey() + " " + entry.getValue());
-      }
-    }
     return compile(script).eval(context);
   }
 
@@ -81,34 +129,12 @@ public class BrainjackEngine extends AbstractScriptEngine implements Compilable,
     return factory;
   }
 
-  public int getPointer() throws ScriptException { // TODO validate arguments and fix order in this
-                                                   // method and the following
-    Object pointer = getBindings(ScriptContext.ENGINE_SCOPE).get(POINTER);
-    if (Integer.class.isAssignableFrom(pointer.getClass())) {
-      return Integer.class.cast(pointer);
+  private <T> T get(final String name, final Class<T> clazz, final String message)
+      throws ScriptException {
+    final Object object = getBindings(ScriptContext.ENGINE_SCOPE).get(name);
+    if (clazz.isAssignableFrom(object.getClass())) {
+      return clazz.cast(object);
     }
-    throw new ScriptException("Pointer is not an integer"); // TODO
+    throw new ScriptException(new IllegalStateException(message)); // TODO add context info?
   }
-
-  public void setPointer(final int pointer) { // TODO check pointer range?
-    getBindings(ScriptContext.ENGINE_SCOPE).put(POINTER, pointer);
-  }
-
-  public byte getValue() throws ScriptException {
-    return getArray()[getPointer()];
-  }
-
-  public void setValue(final byte value) throws ScriptException {
-    getArray()[getPointer()] = value;
-  }
-
-  private byte[] getArray() throws ScriptException {
-    final Object array = getBindings(ScriptContext.ENGINE_SCOPE).get(ARRAY);
-    if (byte[].class.isAssignableFrom(array.getClass())) {
-      return byte[].class.cast(array);
-    }
-    throw new ScriptException("Array is not a byte array"); // TODO
-  }
-
-  // TODO add common implementation for getPointer and getArray
 }
